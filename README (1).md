@@ -38,6 +38,9 @@ repcount/
 | `deadlift` | Hip (shoulder→hip→knee) | < 90° | > 160° |
 | `lunge` | Knee (hip→knee→ankle) | < 90° | > 160° |
 | `lateral_raise` | Shoulder (hip→shoulder→elbow) | < 30° | > 80° |
+| `bench_press` | Elbow (shoulder→elbow→wrist) | < 90° | > 160° |
+| `leg_press` | Knee (hip→knee→ankle) | < 90° | > 160° |
+| `pullup` | Elbow (shoulder→elbow→wrist) | < 60° | > 150° |
 
 ---
 
@@ -61,8 +64,9 @@ python main.py --exercise shoulder_press --camera-url http://192.168.1.5:4747/vi
 ```
 
 ### Controls
-- **Q** — quit
+- **1–9, 0** — switch exercise on the fly (see exercise list below)
 - **R** — reset rep count
+- **Q** — quit
 
 ---
 
