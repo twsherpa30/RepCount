@@ -9,24 +9,37 @@ EXERCISE_LANDMARKS = {
     "deadlift": [11, 23, 25],       # shoulder, hip, knee
     "lunge": [23, 25, 27],          # hip, knee, ankle
     "lateral_raise": [23, 11, 13],  # hip, shoulder, elbow
+    "bench_press": [11, 13, 15],    # shoulder, elbow, wrist
+    "leg_press": [23, 25, 27],      # hip, knee, ankle
+    "pullup": [11, 13, 15],         # shoulder, elbow, wrist
 }
 
 
 def check_visibility(landmarks, exercise):
     """Return a list of landmark indices with low visibility.
 
+    Counting is only paused when the *majority* of the exercise's
+    landmarks are below the visibility threshold, so a single
+    partially-occluded joint won't freeze the counter.
+
     Args:
         landmarks: MediaPipe pose landmarks (list-like, indexed by landmark id).
         exercise:  Exercise name string.
 
     Returns:
-        list[int]: Indices of landmarks whose visibility is below 0.6.
+        list[int]: Indices of landmarks whose visibility is below the
+                   threshold.  The list is only returned (non-empty) when
+                   at least 2 out of 3 landmarks are below the threshold;
+                   otherwise an empty list is returned so counting continues.
     """
     indices = EXERCISE_LANDMARKS.get(exercise, [])
     low_vis = []
     for idx in indices:
-        if landmarks[idx].visibility < 0.6:
+        if landmarks[idx].visibility < 0.3:
             low_vis.append(idx)
+    # Only signal "low visibility" when the majority of joints are invisible
+    if len(low_vis) < 2:
+        return []
     return low_vis
 
 

@@ -17,12 +17,25 @@ A real-time webcam-based rep counter for gym exercises using MediaPipe Pose esti
 ## Project Structure
 
 ```
-repcount/
-├── main.py           # Entry point — webcam loop, UI, and orchestration
-├── rep_counter.py    # UP/DOWN state machine with angle smoothing
-├── utils.py          # 2D and 3D joint angle calculation helpers
-├── validator.py      # Position and visibility checks
-└── requirements.txt  # mediapipe, opencv-python, numpy
+RepCount/
+├── main.py                  # Entry point — CLI, exercise menu, main loop
+├── requirements.txt         # mediapipe, opencv-python, numpy
+├── README.md
+├── models/
+│   └── pose_landmarker.task # MediaPipe pose landmarker model
+├── src/
+│   ├── __init__.py
+│   ├── config.py            # Exercise definitions, colors, constants
+│   ├── camera.py            # Threaded camera capture + auto-detect
+│   ├── drawing.py           # HUD overlay, exercise bar, angle arc
+│   ├── rep_counter.py       # UP/DOWN state machine with smoothing
+│   ├── utils.py             # 2D and 3D joint angle calculation
+│   └── validator.py         # Visibility and position checks
+└── tests/
+    ├── __init__.py
+    ├── test_rep_counter.py  # Unit tests for rep counting logic
+    ├── test_cam.py          # Camera test script
+    └── test_lag.py          # Lag test script
 ```
 
 ---
@@ -33,14 +46,14 @@ repcount/
 |----------|---------------|----------------|--------------|
 | `squat` | Knee (hip→knee→ankle) | < 90° | > 160° |
 | `pushup` | Elbow (shoulder→elbow→wrist) | < 90° | > 160° |
-| `bicep_curl` | Elbow (shoulder→elbow→wrist) | < 40° | > 140° |
+| `bicep_curl` | Elbow (shoulder→elbow→wrist) | < 50° | > 150° |
 | `shoulder_press` | Shoulder (elbow→shoulder→hip) | < 90° | > 160° |
 | `deadlift` | Hip (shoulder→hip→knee) | < 90° | > 160° |
 | `lunge` | Knee (hip→knee→ankle) | < 90° | > 160° |
-| `lateral_raise` | Shoulder (hip→shoulder→elbow) | < 30° | > 80° |
+| `lateral_raise` | Shoulder (hip→shoulder→elbow) | < 20° | > 70° |
 | `bench_press` | Elbow (shoulder→elbow→wrist) | < 90° | > 160° |
 | `leg_press` | Knee (hip→knee→ankle) | < 90° | > 160° |
-| `pullup` | Elbow (shoulder→elbow→wrist) | < 60° | > 150° |
+| `pullup` | Elbow (shoulder→elbow→wrist) | < 70° | > 160° |
 
 ---
 
@@ -83,7 +96,9 @@ python main.py --exercise shoulder_press --camera-url http://192.168.1.5:4747/vi
 ## How It Works
 
 - **3D Angle Calculation:** Uses MediaPipe's x, y, z coordinates with dot-product formula for accurate joint angles regardless of camera orientation
-- **Angle Smoothing:** Rolling average over 5 frames reduces jitter and prevents false counts
+- **Median Smoothing:** Rolling median over 7 frames rejects outlier spikes from bad pose frames
+- **Hysteresis:** 5° band around thresholds prevents jitter-induced state toggling
+- **Debounce:** 0.4s minimum between reps prevents double-counting
 - **State Machine:** Reps are counted on a down→up transition (angle drops below threshold, then rises above)
 - **Validator:** Checks landmark visibility (blocks counting if unreliable), body positioning (advisory tips)
 
@@ -95,6 +110,14 @@ python main.py --exercise shoulder_press --camera-url http://192.168.1.5:4747/vi
 python -m venv venv
 source venv/bin/activate       # Windows: venv\Scripts\activate
 pip install mediapipe opencv-python numpy
+```
+
+---
+
+## Running Tests
+
+```bash
+python -m pytest tests/ -v
 ```
 
 ---
