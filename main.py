@@ -188,7 +188,8 @@ def main():
 
         # --- HUD ---
         draw_hud(frame, exercise, counter.count, counter.stage,
-                 current_angle, config, warnings)
+                 current_angle, config, warnings,
+                 grace_remaining=counter.grace_remaining)
 
         # --- Exercise selector bar ---
         draw_exercise_bar(frame, exercise)

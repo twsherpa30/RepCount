@@ -74,11 +74,13 @@ def draw_exercise_bar(frame, active_exercise):
                     font_scale, color, thickness, cv2.LINE_AA)
 
 
-def draw_hud(frame, exercise, count, stage, angle, config, warnings):
+def draw_hud(frame, exercise, count, stage, angle, config, warnings,
+             grace_remaining=0.0):
     """Draw the heads-up display overlay panel at top-left.
 
     Features a semi-transparent panel with rep count, exercise name,
     stage indicator, current angle, and warning messages.
+    During the grace period, shows a "GET READY" countdown instead.
     """
     # --- Panel dimensions ---
     panel_w = 340
@@ -89,22 +91,32 @@ def draw_hud(frame, exercise, count, stage, angle, config, warnings):
     _overlay_rect(frame, 0, 0, panel_w, panel_h, DARK, BG_ALPHA)
 
     # Accent bar on the left edge
-    cv2.rectangle(frame, (0, 0), (4, panel_h), ACCENT, -1)
+    accent_bar_color = ORANGE if grace_remaining > 0 else ACCENT
+    cv2.rectangle(frame, (0, 0), (4, panel_h), accent_bar_color, -1)
 
     # --- Exercise name ---
     display_name = exercise.replace("_", " ").upper()
     cv2.putText(frame, display_name, (15, 30), HUD_FONT,
                 0.70, WHITE, 2, cv2.LINE_AA)
 
-    # --- Rep count (large) ---
-    count_str = str(count)
-    cv2.putText(frame, count_str, (15, 85), HUD_FONT,
-                1.8, ACCENT, 3, cv2.LINE_AA)
+    if grace_remaining > 0:
+        # --- Grace-period countdown ---
+        countdown = f"{int(grace_remaining) + 1}"
+        cv2.putText(frame, countdown, (15, 85), HUD_FONT,
+                    1.8, ORANGE, 3, cv2.LINE_AA)
+        count_text_w = cv2.getTextSize(countdown, HUD_FONT, 1.8, 3)[0][0]
+        cv2.putText(frame, "GET READY", (20 + count_text_w, 85), HUD_FONT,
+                    0.50, ORANGE, 1, cv2.LINE_AA)
+    else:
+        # --- Rep count (large) ---
+        count_str = str(count)
+        cv2.putText(frame, count_str, (15, 85), HUD_FONT,
+                    1.8, ACCENT, 3, cv2.LINE_AA)
 
-    # "REPS" label next to count
-    count_text_w = cv2.getTextSize(count_str, HUD_FONT, 1.8, 3)[0][0]
-    cv2.putText(frame, "REPS", (20 + count_text_w, 85), HUD_FONT,
-                0.50, GRAY, 1, cv2.LINE_AA)
+        # "REPS" label next to count
+        count_text_w = cv2.getTextSize(count_str, HUD_FONT, 1.8, 3)[0][0]
+        cv2.putText(frame, "REPS", (20 + count_text_w, 85), HUD_FONT,
+                    0.50, GRAY, 1, cv2.LINE_AA)
 
     # --- Stage indicator ---
     stage_text = stage.upper() if stage else "--"

@@ -45,15 +45,15 @@ RepCount/
 | Exercise | Joint Tracked | Down Threshold | Up Threshold |
 |----------|---------------|----------------|--------------|
 | `squat` | Knee (hip→knee→ankle) | < 90° | > 160° |
-| `pushup` | Elbow (shoulder→elbow→wrist) | < 90° | > 160° |
-| `bicep_curl` | Elbow (shoulder→elbow→wrist) | < 50° | > 150° |
-| `shoulder_press` | Shoulder (elbow→shoulder→hip) | < 90° | > 160° |
-| `deadlift` | Hip (shoulder→hip→knee) | < 90° | > 160° |
+| `pushup` | Elbow (shoulder→elbow→wrist) | < 100° | > 140° |
 | `lunge` | Knee (hip→knee→ankle) | < 90° | > 160° |
-| `lateral_raise` | Shoulder (hip→shoulder→elbow) | < 20° | > 70° |
-| `bench_press` | Elbow (shoulder→elbow→wrist) | < 90° | > 160° |
-| `leg_press` | Knee (hip→knee→ankle) | < 90° | > 160° |
-| `pullup` | Elbow (shoulder→elbow→wrist) | < 70° | > 160° |
+| `sit_up` | Hip (shoulder→hip→knee) | < 90° | > 150° |
+| `glute_bridge` | Hip (shoulder→hip→knee) | < 120° | > 155° |
+| `tricep_dip` | Elbow (shoulder→elbow→wrist) | < 90° | > 140° |
+| `jumping_jack` | Shoulder (hip→shoulder→elbow) | < 30° | > 80° |
+| `leg_raise` | Hip (shoulder→hip→knee) | < 110° | > 160° |
+| `high_knees` | Hip (shoulder→hip→knee) | < 110° | > 155° |
+| `arm_raise` | Shoulder (hip→shoulder→elbow) | < 25° | > 120° |
 
 ---
 

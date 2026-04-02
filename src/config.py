@@ -16,27 +16,9 @@ EXERCISE_CONFIG = {
     },
     "pushup": {
         "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
-        "down_threshold": 90,
-        "up_threshold": 160,
-        "joint_label": "Elbow",
-    },
-    "bicep_curl": {
-        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
-        "down_threshold": 60,
+        "down_threshold": 100,
         "up_threshold": 140,
         "joint_label": "Elbow",
-    },
-    "shoulder_press": {
-        "landmarks": (13, 11, 23),  # elbow, shoulder, hip
-        "down_threshold": 90,
-        "up_threshold": 150,
-        "joint_label": "Shoulder",
-    },
-    "deadlift": {
-        "landmarks": (11, 23, 25),  # shoulder, hip, knee
-        "down_threshold": 90,
-        "up_threshold": 160,
-        "joint_label": "Hip",
     },
     "lunge": {
         "landmarks": (23, 25, 27),  # hip, knee, ankle
@@ -44,29 +26,47 @@ EXERCISE_CONFIG = {
         "up_threshold": 160,
         "joint_label": "Knee",
     },
-    "lateral_raise": {
+    "sit_up": {
+        "landmarks": (11, 23, 25),  # shoulder, hip, knee
+        "down_threshold": 90,
+        "up_threshold": 150,
+        "joint_label": "Hip",
+    },
+    "glute_bridge": {
+        "landmarks": (11, 23, 25),  # shoulder, hip, knee
+        "down_threshold": 120,
+        "up_threshold": 155,
+        "joint_label": "Hip",
+    },
+    "tricep_dip": {
+        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
+        "down_threshold": 90,
+        "up_threshold": 140,
+        "joint_label": "Elbow",
+    },
+    "jumping_jack": {
         "landmarks": (23, 11, 13),  # hip, shoulder, elbow
-        "down_threshold": 25,
-        "up_threshold": 60,
+        "down_threshold": 30,
+        "up_threshold": 80,
         "joint_label": "Shoulder",
     },
-    "bench_press": {
-        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
-        "down_threshold": 90,
+    "leg_raise": {
+        "landmarks": (11, 23, 25),  # shoulder, hip, knee
+        "down_threshold": 110,
         "up_threshold": 160,
-        "joint_label": "Elbow",
+        "joint_label": "Hip",
     },
-    "leg_press": {
-        "landmarks": (23, 25, 27),  # hip, knee, ankle
-        "down_threshold": 90,
-        "up_threshold": 160,
-        "joint_label": "Knee",
+    "high_knees": {
+        "landmarks": (11, 23, 25),  # shoulder, hip, knee
+        "down_threshold": 110,
+        "up_threshold": 155,
+        "joint_label": "Hip",
     },
-    "pullup": {
-        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
-        "down_threshold": 80,
-        "up_threshold": 150,
-        "joint_label": "Elbow",
+    "arm_raise": {
+        "landmarks": (23, 11, 13),  # hip, shoulder, elbow
+        "down_threshold": 25,
+        "up_threshold": 120,
+        "joint_label": "Shoulder",
     },
 }
 

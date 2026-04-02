@@ -4,14 +4,14 @@
 EXERCISE_LANDMARKS = {
     "squat": [23, 25, 27],          # hip, knee, ankle
     "pushup": [11, 13, 15],         # shoulder, elbow, wrist
-    "bicep_curl": [11, 13, 15],     # shoulder, elbow, wrist
-    "shoulder_press": [13, 11, 23], # elbow, shoulder, hip
-    "deadlift": [11, 23, 25],       # shoulder, hip, knee
     "lunge": [23, 25, 27],          # hip, knee, ankle
-    "lateral_raise": [23, 11, 13],  # hip, shoulder, elbow
-    "bench_press": [11, 13, 15],    # shoulder, elbow, wrist
-    "leg_press": [23, 25, 27],      # hip, knee, ankle
-    "pullup": [11, 13, 15],         # shoulder, elbow, wrist
+    "sit_up": [11, 23, 25],         # shoulder, hip, knee
+    "glute_bridge": [11, 23, 25],   # shoulder, hip, knee
+    "tricep_dip": [11, 13, 15],     # shoulder, elbow, wrist
+    "jumping_jack": [23, 11, 13],   # hip, shoulder, elbow
+    "leg_raise": [11, 23, 25],      # shoulder, hip, knee
+    "high_knees": [11, 23, 25],     # shoulder, hip, knee
+    "arm_raise": [23, 11, 13],      # hip, shoulder, elbow
 }
 
 
