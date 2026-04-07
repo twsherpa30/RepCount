@@ -32,9 +32,6 @@ from src.utils import calculate_angle_3d
 from src.validator import check_visibility, is_side_on, is_body_in_frame
 
 
-# ---------------------------------------------------------------------------
-# CLI & menu helpers
-# ---------------------------------------------------------------------------
 
 def parse_args():
     """Parse command-line arguments."""
@@ -91,21 +88,38 @@ def select_exercise():
 
 
 def switch_exercise(name):
-    """Build fresh config, landmark indices, and counter for an exercise."""
+    """Build fresh config and counter for an exercise."""
     config = EXERCISE_CONFIG[name]
-    lm_a, lm_b, lm_c = config["landmarks"]
     counter = RepCounter(config["down_threshold"], config["up_threshold"])
-    return config, lm_a, lm_b, lm_c, counter
+    return config, counter
 
 
-# ---------------------------------------------------------------------------
-# Main loop
-# ---------------------------------------------------------------------------
+def pick_best_side(landmarks, config):
+    """Return landmark indices for the body side with better visibility.
+
+    Compares average visibility of the primary (left) and alternate (right)
+    landmark triplets and returns whichever is more visible to the camera.
+    Requires a meaningful visibility advantage (+0.1) to switch sides,
+    preventing rapid flickering between sides.
+    """
+    lm_a, lm_b, lm_c = config["landmarks"]
+    primary_vis = sum(landmarks[i].visibility for i in (lm_a, lm_b, lm_c)) / 3
+
+    alt = config.get("landmarks_alt")
+    if alt:
+        alt_a, alt_b, alt_c = alt
+        alt_vis = sum(landmarks[i].visibility for i in (alt_a, alt_b, alt_c)) / 3
+        if alt_vis > primary_vis + 0.1:
+            return alt_a, alt_b, alt_c
+
+    return lm_a, lm_b, lm_c
+
+
 
 def main():
     args = parse_args()
     exercise = args.exercise if args.exercise else select_exercise()
-    config, lm_a, lm_b, lm_c, counter = switch_exercise(exercise)
+    config, counter = switch_exercise(exercise)
 
     cap = open_camera(args.camera, args.camera_url)
 
@@ -169,6 +183,7 @@ def main():
                 warnings.append(("Tip: Step back -- body near edge", ORANGE))
 
             # --- 3D Angle calculation ---
+            lm_a, lm_b, lm_c = pick_best_side(landmarks, config)
             a = [landmarks[lm_a].x, landmarks[lm_a].y, landmarks[lm_a].z]
             b = [landmarks[lm_b].x, landmarks[lm_b].y, landmarks[lm_b].z]
             c = [landmarks[lm_c].x, landmarks[lm_c].y, landmarks[lm_c].z]
@@ -214,7 +229,7 @@ def main():
 
             if 0 <= idx < len(EXERCISE_LIST):
                 exercise = EXERCISE_LIST[idx]
-                config, lm_a, lm_b, lm_c, counter = switch_exercise(exercise)
+                config, counter = switch_exercise(exercise)
                 print(f"Switched to: {exercise.replace('_', ' ').title()}")
 
     landmarker.close()

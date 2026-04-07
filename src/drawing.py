@@ -11,9 +11,6 @@ from src.config import (
 )
 
 
-# ---------------------------------------------------------------------------
-# Drawing helpers
-# ---------------------------------------------------------------------------
 
 def _overlay_rect(frame, x1, y1, x2, y2, color, alpha):
     """Draw a semi-transparent filled rectangle."""

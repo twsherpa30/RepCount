@@ -27,7 +27,7 @@ class RepCounter:
     """
 
     def __init__(self, down_threshold=90, up_threshold=160,
-                 smooth_window=7, hysteresis=3, debounce_sec=0.4,
+                 smooth_window=5, hysteresis=2, debounce_sec=0.4,
                  grace_sec=3.0):
         self.down_threshold = down_threshold
         self.up_threshold = up_threshold

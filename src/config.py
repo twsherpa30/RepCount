@@ -4,68 +4,75 @@ import os
 
 import cv2
 
-# ---------------------------------------------------------------------------
-# Exercise definitions
-# ---------------------------------------------------------------------------
 EXERCISE_CONFIG = {
     "squat": {
-        "landmarks": (23, 25, 27),  # hip, knee, ankle
-        "down_threshold": 90,
-        "up_threshold": 160,
+        "landmarks": (23, 25, 27),      # hip, knee, ankle (left)
+        "landmarks_alt": (24, 26, 28),   # hip, knee, ankle (right)
+        "down_threshold": 95,
+        "up_threshold": 155,
         "joint_label": "Knee",
     },
     "pushup": {
-        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
+        "landmarks": (11, 13, 15),       # shoulder, elbow, wrist (left)
+        "landmarks_alt": (12, 14, 16),   # shoulder, elbow, wrist (right)
         "down_threshold": 100,
-        "up_threshold": 140,
+        "up_threshold": 135,
         "joint_label": "Elbow",
     },
     "lunge": {
-        "landmarks": (23, 25, 27),  # hip, knee, ankle
-        "down_threshold": 90,
-        "up_threshold": 160,
+        "landmarks": (23, 25, 27),
+        "landmarks_alt": (24, 26, 28),
+        "down_threshold": 95,
+        "up_threshold": 155,
         "joint_label": "Knee",
     },
     "sit_up": {
-        "landmarks": (11, 23, 25),  # shoulder, hip, knee
-        "down_threshold": 90,
-        "up_threshold": 150,
+        "landmarks": (11, 23, 25),
+        "landmarks_alt": (12, 24, 26),
+        "down_threshold": 95,
+        "up_threshold": 140,
         "joint_label": "Hip",
     },
     "glute_bridge": {
-        "landmarks": (11, 23, 25),  # shoulder, hip, knee
-        "down_threshold": 120,
-        "up_threshold": 155,
+        "landmarks": (11, 23, 25),
+        "landmarks_alt": (12, 24, 26),
+        "down_threshold": 125,
+        "up_threshold": 150,
         "joint_label": "Hip",
     },
     "tricep_dip": {
-        "landmarks": (11, 13, 15),  # shoulder, elbow, wrist
-        "down_threshold": 90,
-        "up_threshold": 140,
+        "landmarks": (11, 13, 15),
+        "landmarks_alt": (12, 14, 16),
+        "down_threshold": 95,
+        "up_threshold": 135,
         "joint_label": "Elbow",
     },
     "jumping_jack": {
-        "landmarks": (23, 11, 13),  # hip, shoulder, elbow
-        "down_threshold": 30,
-        "up_threshold": 80,
+        "landmarks": (23, 11, 13),       # hip, shoulder, elbow (left)
+        "landmarks_alt": (24, 12, 14),   # hip, shoulder, elbow (right)
+        "down_threshold": 35,
+        "up_threshold": 70,
         "joint_label": "Shoulder",
     },
     "leg_raise": {
-        "landmarks": (11, 23, 25),  # shoulder, hip, knee
+        "landmarks": (11, 23, 25),
+        "landmarks_alt": (12, 24, 26),
         "down_threshold": 110,
-        "up_threshold": 160,
+        "up_threshold": 150,
         "joint_label": "Hip",
     },
     "high_knees": {
-        "landmarks": (11, 23, 25),  # shoulder, hip, knee
-        "down_threshold": 110,
-        "up_threshold": 155,
+        "landmarks": (11, 23, 25),
+        "landmarks_alt": (12, 24, 26),
+        "down_threshold": 115,
+        "up_threshold": 145,
         "joint_label": "Hip",
     },
     "arm_raise": {
-        "landmarks": (23, 11, 13),  # hip, shoulder, elbow
-        "down_threshold": 25,
-        "up_threshold": 120,
+        "landmarks": (23, 11, 13),
+        "landmarks_alt": (24, 12, 14),
+        "down_threshold": 30,
+        "up_threshold": 90,
         "joint_label": "Shoulder",
     },
 }
@@ -76,9 +83,7 @@ EXERCISE_LIST = list(EXERCISE_CONFIG.keys())
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(PROJECT_ROOT, "models", "pose_landmarker.task")
 
-# ---------------------------------------------------------------------------
-# Colour palette
-# ---------------------------------------------------------------------------
+
 BG_ALPHA = 0.70          # overlay transparency
 ACCENT = (0, 220, 120)   # green accent
 ACCENT_DIM = (0, 140, 80)
